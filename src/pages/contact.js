@@ -8,7 +8,7 @@ export default function Contact() {
         <div className="container">
           <div className="inner-page">
             <div className="content">
-              <h3>Hola soy el contacto de Rodriguito.</h3>
+              <h3>Hola soy el contacto de Monés.</h3>
             </div>
           </div>
         </div>
