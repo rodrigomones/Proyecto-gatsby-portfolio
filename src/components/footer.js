@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "gatsby";
 
 //Featured Companies
 import kodak from "../images/kodak.svg";
@@ -33,12 +34,12 @@ const Footer = () => {
         <div className="inner">
           <span>© 2021 Rodrigo Monés</span>
           <div className="socials">
-            <a href="/">
+            <Link href="/">
               <img src={twitter} alt="Twitter" />
-            </a>
-            <a href="/">
+            </Link>
+            <Link href="https://www.instagram.com/mones.r/" target="_blank">
               <img src={instagram} alt="Instagram" />
-            </a>
+            </Link>
           </div>
           <span>rodrigomones@gmail.com</span>
         </div>
