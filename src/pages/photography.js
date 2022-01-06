@@ -1,30 +1,40 @@
 import { graphql } from "gatsby";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Layout from "../components/layout";
-import Img from "gatsby-image";
 import CloseIcon from "@mui/icons-material/Close";
 import useNearScreen from "../hooks/useNearScreen";
 import debounce from "just-debounce-it";
+import Photos from "../components/Photos";
 
 function Contact({ data }) {
-  const photos = data.photos.edges;
-
+  const [id, setId] = useState([]);
   const [model, setModel] = useState(false);
+  const [show, setShow] = useState(10);
   const [tempingSrc, setTempingSrc] = useState("000031530003.jpg");
   const externalRef = useRef();
+
+  const items = data.photos.edges;
+  useEffect(() => {
+    let aux = itemsToShow.map((element) => {
+      return {
+        id: element.node.id,
+      };
+    });
+    setId(aux);
+  }, [items]);
+
   const { isNearScreen } = useNearScreen({
     externalRef: "" ? null : externalRef,
     once: false,
   });
-  const [hasta, setHasta] = useState(10);
+
   const getImg = ({ image }) => {
     setTempingSrc(image.node.base);
     setModel(true);
   };
-  // const path = `./images/photos/${tempingSrc}`;
 
   const debounceHandleNextPage = useCallback(
-    debounce(() => setHasta((hasta) => hasta + 10), 200),
+    debounce(() => setShow((show) => show + 10), 200),
     []
   );
 
@@ -34,6 +44,8 @@ function Contact({ data }) {
     },
     [isNearScreen, debounceHandleNextPage]
   );
+
+  let itemsToShow = items.slice(0, show);
 
   useEffect(() => {
     const close = (e) => {
@@ -56,23 +68,10 @@ function Contact({ data }) {
       </div>
       <div className="photos-page">
         <div className="container">
-          <div className="inner-page2">
-            <div className="content2">
-              <h3>Hola soy el contacto de Monés.</h3>
-              <div className="gallery">
-                {photos.slice(0, hasta).map((image) => (
-                  <div
-                    key={image.node.id}
-                    className="images"
-                    onClick={() => getImg({ image })}
-                  >
-                    <Img
-                      fluid={image.node.childImageSharp.fluid}
-                      alt={image.node.base}
-                    />
-                  </div>
-                ))}
-              </div>
+          <div className="inner-page-photography">
+            <div className="content-photography">
+              <h3>Film Photography</h3>
+              <Photos itemsToShow={itemsToShow} getImg={getImg} id={id} />
             </div>
           </div>
         </div>

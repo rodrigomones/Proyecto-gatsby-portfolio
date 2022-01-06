@@ -11,9 +11,9 @@ import twitter from "../images/twitter.svg";
 import instagram from "../images/instagram.svg";
 
 const featured = [
-  { name: "Hasselblad", image: hasselblad },
-  { name: "Kodak", image: kodak },
-  { name: "Pentax", image: pentax },
+  { name: "Hasselblad", image: hasselblad, id: 1 },
+  { name: "Kodak", image: kodak, id: 2 },
+  { name: "Pentax", image: pentax, id: 3 },
 ];
 
 const Footer = () => {
@@ -22,8 +22,8 @@ const Footer = () => {
       <div className="featured-companies">
         <div className="container">
           <ul>
-            {featured.map(({ name, image }) => (
-              <li key="name">
+            {featured.map(({ name, image, id }) => (
+              <li key={id}>
                 <img src={image} alt={name} />
               </li>
             ))}

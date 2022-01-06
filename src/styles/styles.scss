@@ -461,8 +461,11 @@ footer {
   padding: 48px 0;
   background: $white;
   position: relative;
-  .inner-page2 {
+  .inner-page-photography {
     height: 100%;
+    .content-photography {
+      overflow: hidden;
+    }
   }
 }
 .gallery {
