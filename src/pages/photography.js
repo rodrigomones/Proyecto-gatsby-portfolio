@@ -7,31 +7,36 @@ import debounce from "just-debounce-it";
 import Photos from "../components/Photos";
 
 function Contact({ data }) {
-  const [id, setId] = useState([]);
+  const [idPhoto, setIdPhoto] = useState([]);
+  const [photoName, setPhotoName] = useState([]);
   const [model, setModel] = useState(false);
   const [show, setShow] = useState(10);
   const [tempingSrc, setTempingSrc] = useState("000031530003.jpg");
   const externalRef = useRef();
 
   const items = data.photos.edges;
-  useEffect(() => {
-    let aux = itemsToShow.map((element) => {
-      return {
-        id: element.node.id,
-      };
-    });
-    setId(aux);
-  }, [items]);
 
-  const { isNearScreen } = useNearScreen({
-    externalRef: "" ? null : externalRef,
-    once: false,
-  });
-
+  // Open image modal
   const getImg = ({ image }) => {
     setTempingSrc(image.node.base);
     setModel(true);
   };
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setModel(false);
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
+
+  // Pagination
+  const { isNearScreen } = useNearScreen({
+    externalRef: "" ? null : externalRef,
+    once: false,
+  });
 
   const debounceHandleNextPage = useCallback(
     debounce(() => setShow((show) => show + 10), 200),
@@ -45,17 +50,23 @@ function Contact({ data }) {
     [isNearScreen, debounceHandleNextPage]
   );
 
-  let itemsToShow = items.slice(0, show);
+  var itemsToShow = items.slice(0, show);
 
   useEffect(() => {
-    const close = (e) => {
-      if (e.keyCode === 27) {
-        setModel(false);
-      }
-    };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-  }, []);
+    let aux = itemsToShow.map((element) => {
+      return {
+        id: element.node.base,
+      };
+    });
+    setIdPhoto(aux);
+  }, [itemsToShow.length]);
+
+  useEffect(() => {
+    var newArray = idPhoto.map(function (el) {
+      return el.id;
+    });
+    setPhotoName(newArray);
+  }, [idPhoto.length]);
 
   return (
     <Layout>
@@ -71,7 +82,11 @@ function Contact({ data }) {
           <div className="inner-page-photography">
             <div className="content-photography">
               <h3>Film Photography</h3>
-              <Photos itemsToShow={itemsToShow} getImg={getImg} id={id} />
+              <Photos
+                itemsToShow={itemsToShow}
+                getImg={getImg}
+                id={photoName}
+              />
             </div>
           </div>
         </div>
