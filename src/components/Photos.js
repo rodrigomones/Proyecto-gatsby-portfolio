@@ -1,8 +1,15 @@
 import React from "react";
-import { Masonry } from "@mui/lab";
+import Masonry from "react-masonry-css";
 import Img from "gatsby-image";
 
 function Photos({ itemsToShow, getImg, id }) {
+  const breakpointColumnsObj = {
+    default: 3,
+    1100: 3,
+    700: 2,
+    500: 1,
+  };
+
   var childElements = itemsToShow.map((image) => (
     <div
       key={image.node.id}
@@ -15,7 +22,11 @@ function Photos({ itemsToShow, getImg, id }) {
 
   return (
     <>
-      <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={1}>
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
         {childElements}
       </Masonry>
     </>
