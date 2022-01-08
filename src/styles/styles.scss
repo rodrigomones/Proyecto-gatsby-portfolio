@@ -19,19 +19,23 @@ body {
 
 .container {
   width: 1640px;
-  min-width: 1640px;
+  //min-width: 1640px;
   margin: 0 auto;
   @media (max-width: 1440px) {
     width: 1280px;
-    min-width: 1280px;
+    //min-width: 1280px;
   }
   @media (max-width: 1280px) {
     width: 976px;
-    min-width: 976px;
+    //min-width: 976px;
   }
   @media (max-width: 976px) {
     width: 768px;
-    min-width: 768px;
+    //min-width: 768px;
+  }
+  @media (max-width: 700px) {
+    width: auto;
+    //min-width: 768px;
   }
 }
 
@@ -168,6 +172,7 @@ header {
     align-items: center;
     .content {
       width: 33%;
+      z-index: 9;
       @media (max-width: 1440px) {
         width: 40%;
       }
@@ -226,11 +231,12 @@ header {
     }
   }
   .black-box {
-    background: $black;
+    background: $white;
     height: 418px;
     width: 836px;
     position: absolute;
     right: 0;
+    z-index: 0;
     top: 50%;
     transform: translateY(-50%);
     @media (max-width: 1440px) {
@@ -479,6 +485,7 @@ footer {
 .images {
   -webkit-transition: all 350ms ease;
   transition: all 350ms ease;
+  object-fit: contain;
   cursor: pointer;
   margin-bottom: 12px;
 }
